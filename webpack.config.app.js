@@ -4,7 +4,7 @@ var webpack = require("webpack");
 module.exports = {
   context: path.join(__dirname, "client"),
   entry: {
-  app: "./app.js"
+    app: "./app.js"
   },
   output: {
   path: path.join(__dirname, "dist/webpack"),

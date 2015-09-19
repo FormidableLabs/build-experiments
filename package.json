@@ -4,13 +4,19 @@
   "description": "Build experiments w/ different loaders",
   "main": "index.js",
   "scripts": {
+    "wp-clean": "rm -rf dist/webpack/*.{js,json}",
     "wp-build-lib": "webpack --config webpack.config.lib.js",
     "wp-build-app": "webpack --config webpack.config.app.js",
-    "wp-build": "npm run wp-build-lib && npm run wp-build-app"
+    "wp-build": "npm run wp-clean && npm run wp-build-lib && npm run wp-build-app",
+    "ilk-clean": "rm -rf dist/interlock/*.{js,json}",
+    "ilk-build-app": "node interlock.js",
+    "ilk-build": "npm run ilk-clean && npm run ilk-build-app",
+    "build": "npm run wp-build && npm run ilk-build"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "interlock": "^0.3.0",
     "webpack": "^1.12.2"
   }
 }
