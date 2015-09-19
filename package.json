@@ -1,0 +1,16 @@
+{
+  "name": "build-experiments",
+  "version": "0.0.1",
+  "description": "Build experiments w/ different loaders",
+  "main": "index.js",
+  "scripts": {
+    "wp-build-lib": "webpack --config webpack.config.lib.js",
+    "wp-build-app": "webpack --config webpack.config.app.js",
+    "wp-build": "npm run wp-build-lib && npm run wp-build-app"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "webpack": "^1.12.2"
+  }
+}
