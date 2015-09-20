@@ -44,9 +44,9 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var foo = __webpack_require__(1)
-
-	console.log("FOO: ", foo);
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function (foo) {
+	  console.log("FOO: ", foo);
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 
 /***/ },
@@ -59,7 +59,7 @@
 /* 2 */
 /***/ function(module, exports) {
 
-	module.exports = lib_c840a196fbc2e06df3e9;
+	module.exports = lib_2500278ecfec12db5271;
 
 /***/ }
 /******/ ]);
