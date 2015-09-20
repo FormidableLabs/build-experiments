@@ -6,17 +6,27 @@
   "scripts": {
     "wp-clean": "rm -rf dist/webpack/*.{js,json}",
     "wp-build-lib": "webpack --config webpack.config.lib.js",
+    "wp-build-lib-min": "OPTIMIZE=true webpack --config webpack.config.lib.js",
     "wp-build-app": "webpack --config webpack.config.app.js",
-    "wp-build": "npm run wp-clean && npm run wp-build-lib && npm run wp-build-app",
     "ilk-clean": "rm -rf dist/interlock/*.{js,json}",
     "ilk-build-app": "node interlock.js",
     "ilk-build": "npm run ilk-clean && npm run ilk-build-app",
-    "build": "npm run wp-build && npm run ilk-build"
+    "wp-build-app-min": "OPTIMIZE=true webpack --config webpack.config.app.js",
+    "wp-build": "npm run wp-clean && npm run wp-build-lib && npm run wp-build-lib-min && npm run wp-build-app && npm run wp-build-app-min",
+    "rjs-clean": "rm -rf dist/requirejs/*.{js,json} client-requirejs-build",
+    "rjs-build-almond": "node_modules/webpack/node_modules/uglify-js/bin/uglifyjs node_modules/almond/almond.js -o dist/requirejs/almond.min.js --compress --mangle",
+    "rjs-build-app": "r.js -o requirejs.build.js && cp client-requirejs-build/{lib,app}.min.js dist/requirejs",
+    "rjs-build": "npm run rjs-clean && npm run rjs-build-almond && npm run rjs-build-app",
+    "build": "npm run wp-build && npm run rjs-build && npm run ilk-build",
+    "sizes": "wc -c dist/webpack/*.min.js && wc -c dist/requirejs/*.min.js && wc -c dist/interlock/*.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "almond": "^0.3.1",
     "interlock": "^0.3.0",
+    "lodash": "^3.10.1",
+    "requirejs": "^2.1.20",
     "webpack": "^1.12.2"
   }
 }

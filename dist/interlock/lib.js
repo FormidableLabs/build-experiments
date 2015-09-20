@@ -1,10 +1,13 @@
 (function () {
   window['__interlock__'].load({
-    '34bb85ff769d69734bad8c9bb9cfa20a0c82c096': {
-      deps: ['75d94d80d00b60ebbd90b54130af2c5f366cf975'],
+    '68eda4e67c494cf47dfb4a0c00365e5add70fe6e': {
+      deps: ['6dcc6f54c68dd896e04134535fd9ee0c482fd1ac'],
       fn: function (require, module, exports) {
         'use strict';
-        module.exports = { foo: require('75d94d80d00b60ebbd90b54130af2c5f366cf975') };
+        module.exports = function () {
+          var foo = require('6dcc6f54c68dd896e04134535fd9ee0c482fd1ac');
+          return { foo: foo };
+        }();
       }
     }
   });

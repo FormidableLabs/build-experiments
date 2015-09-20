@@ -196,19 +196,21 @@
     }
   };
   window['__interlock__'].registerUrls({
-    '34bb85ff769d69734bad8c9bb9cfa20a0c82c096': 'lib.js',
-    'a98497ed017da1ca0383788fa09b4b583110d104': 'app.js',
-    '75d94d80d00b60ebbd90b54130af2c5f366cf975': '87c5dbe060198864c7090fbe10e8d29dc66ccbf4.js'
+    '68eda4e67c494cf47dfb4a0c00365e5add70fe6e': 'lib.js',
+    'a72d46f97ff2c6631660fe1b711dfc8a357c8f0c': 'app.js',
+    '6dcc6f54c68dd896e04134535fd9ee0c482fd1ac': '72366bfb691bca8bdc166e084ccde04627ccb29a.js'
   });
   window['__interlock__'].load({
-    'a98497ed017da1ca0383788fa09b4b583110d104': {
-      deps: ['75d94d80d00b60ebbd90b54130af2c5f366cf975'],
+    'a72d46f97ff2c6631660fe1b711dfc8a357c8f0c': {
+      deps: ['6dcc6f54c68dd896e04134535fd9ee0c482fd1ac'],
       fn: function (require, module, exports) {
         'use strict';
-        var foo = require('75d94d80d00b60ebbd90b54130af2c5f366cf975');
-        console.log('FOO: ', foo);
+        module.exports = function () {
+          var foo = require('6dcc6f54c68dd896e04134535fd9ee0c482fd1ac');
+          console.log('FOO: ', foo);
+        }();
       }
     }
   });
-  window['__interlock__'].modules['a98497ed017da1ca0383788fa09b4b583110d104'].entry = true;
+  window['__interlock__'].modules['a72d46f97ff2c6631660fe1b711dfc8a357c8f0c'].entry = true;
 }());
