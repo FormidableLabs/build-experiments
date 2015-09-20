@@ -14,7 +14,8 @@
     "rjs-build-almond": "node_modules/webpack/node_modules/uglify-js/bin/uglifyjs node_modules/almond/almond.js -o dist/requirejs/almond.min.js",
     "rjs-build-app": "r.js -o requirejs.build.js && cp client-requirejs-build/{lib,app}.min.js dist/requirejs",
     "rjs-build": "npm run rjs-clean && npm run rjs-build-almond && npm run rjs-build-app",
-    "build": "npm run wp-build && npm run rjs-build"
+    "build": "npm run wp-build && npm run rjs-build",
+    "sizes": "wc -c dist/webpack/*.min.js && wc -c dist/requirejs/*.min.js"
   },
   "author": "",
   "license": "MIT",
