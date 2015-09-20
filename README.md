@@ -5,7 +5,7 @@ A quick skim of JS builders.
 
 ## Sizes
 
-These are _minified_, but **not** _gzipped_ byte sizes
+These are _minified_, but **not** _gzipped_ byte **bundle sizes**:
 
 | File | webpack | requirejs | interlock |
 |------|---------|-----------|-----------|
@@ -13,6 +13,14 @@ These are _minified_, but **not** _gzipped_ byte sizes
 | `lib.js`  | `478` | `114`   | `???` |
 | `app.js`  | `399` | `108`   | `???` |
 | Total     | `877` | `3100`  | `???` |
+
+Here are the estimated **runtime overheads**:
+
+| File | webpack | requirejs | interlock |
+|------|---------|-----------|-----------|
+| Loader          | `0`   | `2878`                  | `???` |
+| Per Module      | `20`  | `0`                     | `???` |
+| Per Dependency  | `3`   | `4` + `PATH_STR.length` | `???` |
 
 ## Features
 
@@ -45,11 +53,13 @@ Based on [Webpack's Matrix](http://webpack.github.io/docs/comparison.html)
 | replacement for browser | `web_modules`, `.web.js`, package.json field, alias config option | alias option | `???` |
 | minimizing | uglify | uglify, closure compiler | `???` |
 | mangle path names | **yes** | no | `???` |
-| Runtime overhead | **243b + 20b per module + 4b per dependency** | 14.7kb + 0b per module + (3b + X) per dependency | `???` |
+| Runtime overhead | **243b + 20b per module + 4b per dependency** | 2.8kb + 0b per module + (3b + X) per dependency | `???` |
 
 ♦ in production mode (opposite in development mode)
 
 X is the length of the path string
+
+RequireJS runtime overhead assumes `almond` loader replacement.
 
 ## Loader Boilerplate
 
