@@ -1,3 +1,3 @@
-var foo = require("./foo")
-
-console.log("FOO: ", foo);
+define(["./foo"], function (foo) {
+  console.log("FOO: ", foo);
+});

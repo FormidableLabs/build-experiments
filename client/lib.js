@@ -1,4 +1,5 @@
-module.exports = {
-  foo: require("./foo")
-};
-
+define(["./foo"], function (foo) {
+  return {
+    foo: foo
+  };
+});

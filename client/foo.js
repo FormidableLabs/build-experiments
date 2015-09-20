@@ -1,1 +1,1 @@
-module.exports = "Hi. I'm foo.";
+define("Hi. I'm foo.");
