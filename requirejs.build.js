@@ -4,10 +4,14 @@
   dir: "client-requirejs-build",
   modules: [
     {
-      name: "lib"
+      name: "lib.min",
+      create: true,
+      include: ["lib"]
     },
     {
-      name: "app",
+      name: "app.min",
+      create: true,
+      include: ["app"],
       exclude: ["lib"],       // Lib is shared dependency
       insertRequire: ["app"]  // Actually execute `app` entry point
     }

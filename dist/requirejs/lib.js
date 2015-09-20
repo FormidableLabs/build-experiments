@@ -1,1 +1,0 @@
-define("foo",[],"Hi. I'm foo."),define("lib",["./foo"],function(o){return{foo:o}});
