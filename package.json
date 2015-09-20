@@ -6,8 +6,10 @@
   "scripts": {
     "wp-clean": "rm -rf dist/webpack/*.{js,json}",
     "wp-build-lib": "webpack --config webpack.config.lib.js",
+    "wp-build-lib-min": "webpack --config webpack.config.lib.js --optimize-minimize --output-file '[name].min.js'",
     "wp-build-app": "webpack --config webpack.config.app.js",
-    "wp-build": "npm run wp-clean && npm run wp-build-lib && npm run wp-build-app",
+    "wp-build-app-min": "webpack --config webpack.config.app.js --optimize-minimize --output-file '[name].min.js'",
+    "wp-build": "npm run wp-clean && npm run wp-build-lib && npm run wp-build-lib-min && npm run wp-build-app && npm run wp-build-app-min",
     "rjs-clean": "rm -rf dist/requirejs/*.{js,json}",
     "rjs-build-app": "echo TODO",
     "rjs-build": "npm run rjs-clean && npm run rjs-build-app",
@@ -16,6 +18,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^3.10.1",
+    "requirejs": "^2.1.20",
     "webpack": "^1.12.2"
   }
 }
