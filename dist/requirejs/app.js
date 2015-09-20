@@ -1,0 +1,1 @@
+define("app",["./foo"],function(o){console.log("FOO: ",o)}),require(["app"]);
