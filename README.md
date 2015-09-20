@@ -15,8 +15,8 @@ These are _minified_, but **not** _gzipped_ byte **bundle sizes**:
 | Extras    | `0`   | `0`     | `176` |
 | Total     | `866` | `3118`  | `2630` |
 
-Interlock has `HASH.js` file and `app.js` contains the overhead, so these
-numbers in _total_ might be accurate, but not split up here.
+Interlock has `HASH.js` files and `app.js` contains the overhead, so these
+numbers in _total_ might be accurate, but are likely not split up correctly.
 
 Here are the estimated **runtime overheads**:
 
