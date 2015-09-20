@@ -9,10 +9,14 @@ These are _minified_, but **not** _gzipped_ byte **bundle sizes**:
 
 | File | webpack | requirejs | interlock |
 |------|---------|-----------|-----------|
-| Loader    | `0`   | `2878`  | `???` |
-| `lib.js`  | `478` | `114`   | `???` |
-| `app.js`  | `399` | `108`   | `???` |
-| Total     | `877` | `3100`  | `???` |
+| Loader    | `0`   | `2878`  | `0` |
+| `lib.js`  | `467` | `132`   | `263` |
+| `app.js`  | `399` | `108`   | `2191` |
+| Extras    | `0`   | `0`     | `176` |
+| Total     | `866` | `3118`  | `2630` |
+
+Interlock has `HASH.js` file and `app.js` contains the overhead, so these
+numbers in _total_ might be accurate, but not split up here.
 
 Here are the estimated **runtime overheads**:
 
@@ -119,3 +123,7 @@ Almond is the slim loader, and definitely bigger than Webpack.
 It minifies to about `2878` bytes. The unminified
 [`almond.js`](https://github.com/jrburke/almond/blob/master/almond.js) is
 available on GitHub.
+
+### Interlock
+
+`TODO: Insert loader analysis`

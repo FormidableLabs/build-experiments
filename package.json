@@ -18,7 +18,8 @@
     "rjs-build-app": "r.js -o requirejs.build.js && cp client-requirejs-build/{lib,app}.min.js dist/requirejs",
     "rjs-build": "npm run rjs-clean && npm run rjs-build-almond && npm run rjs-build-app",
     "build": "npm run wp-build && npm run rjs-build && npm run ilk-build",
-    "sizes": "wc -c dist/webpack/*.min.js && wc -c dist/requirejs/*.min.js && wc -c dist/interlock/*.js"
+    "ilk-sizes": "ls dist/interlock/*.js | xargs -I % sh -c \"echo %; node_modules/webpack/node_modules/uglify-js/bin/uglifyjs % --compress --mangle | wc -c\"",
+    "sizes": "wc -c dist/webpack/*.min.js && wc -c dist/requirejs/*.min.js && npm run ilk-sizes"
   },
   "author": "",
   "license": "MIT",
