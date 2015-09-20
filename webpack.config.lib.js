@@ -18,5 +18,7 @@ module.exports = {
       path: path.join(__dirname, "dist/webpack/[name]-manifest" + (OPTIMIZE ? ".min" : "") + ".json"),
       name: "[name]_[hash]"
     })
-  ]
+  ].concat(OPTIMIZE ? [
+    new webpack.optimize.UglifyJsPlugin()
+  ] : [])
 };

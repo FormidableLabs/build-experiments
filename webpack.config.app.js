@@ -17,5 +17,7 @@ module.exports = {
       context: path.join(__dirname, "client"),
       manifest: require("./dist/webpack/lib-manifest" + (OPTIMIZE ? ".min" : "") + ".json")
     })
-  ]
+  ].concat(OPTIMIZE ? [
+    new webpack.optimize.UglifyJsPlugin()
+  ] : [])
 };
