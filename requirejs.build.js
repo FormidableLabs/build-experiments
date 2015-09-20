@@ -7,6 +7,7 @@
       name: "lib.min",
       create: true,
       include: ["lib"]
+      // Note: Add "../node_modules/almond/almond" for combined lib build.
     },
     {
       name: "app.min",

@@ -9,10 +9,10 @@ These are _minified_, but **not** _gzipped_ byte sizes
 
 | File | webpack | requirejs | interlock |
 |------|---------|-----------|-----------|
-| Loader    | `0`   | `5223`  | `???` |
+| Loader    | `0`   | `2878`  | `???` |
 | `lib.js`  | `478` | `114`   | `???` |
 | `app.js`  | `399` | `108`   | `???` |
-| Total     | `877` | `5445`  | `???` |
+| Total     | `877` | `3100`  | `???` |
 
 ## Features
 

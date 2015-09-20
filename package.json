@@ -11,7 +11,7 @@
     "wp-build-app-min": "webpack --config webpack.config.app.js --optimize-minimize --output-file '[name].min.js'",
     "wp-build": "npm run wp-clean && npm run wp-build-lib && npm run wp-build-lib-min && npm run wp-build-app && npm run wp-build-app-min",
     "rjs-clean": "rm -rf dist/requirejs/*.{js,json} client-requirejs-build",
-    "rjs-build-almond": "node_modules/webpack/node_modules/uglify-js/bin/uglifyjs node_modules/almond/almond.js -o dist/requirejs/almond.min.js",
+    "rjs-build-almond": "node_modules/webpack/node_modules/uglify-js/bin/uglifyjs node_modules/almond/almond.js -o dist/requirejs/almond.min.js --compress --mangle",
     "rjs-build-app": "r.js -o requirejs.build.js && cp client-requirejs-build/{lib,app}.min.js dist/requirejs",
     "rjs-build": "npm run rjs-clean && npm run rjs-build-almond && npm run rjs-build-app",
     "build": "npm run wp-build && npm run rjs-build",
