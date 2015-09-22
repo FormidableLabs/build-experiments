@@ -1,13 +1,13 @@
 (function () {
   /**
- * Behavior identical to _.extend.  Copies key/value pairs from source
- * objects to destination object.
- *
- * @param  {Object} dest     Destination for key/value pairs.
- * @param  {Object} sources  One or more sources for key/value pairs.
- *
- * @return {Object}          Destination object.
- */
+   * Behavior identical to _.extend.  Copies key/value pairs from source
+   * objects to destination object.
+   *
+   * @param  {Object} dest     Destination for key/value pairs.
+   * @param  {Object} sources  One or more sources for key/value pairs.
+   *
+   * @return {Object}          Destination object.
+   */
   function copyProps(dest)
     /* sources... */
     {
@@ -22,23 +22,23 @@
       });
       return dest;
     }  /**
- * This object is exposed to the browser environment and is accessible
- * to chunks that are loaded asynchronously.  It represents the core
- * of the Interlock runtime.
- */
+        * This object is exposed to the browser environment and is accessible
+        * to chunks that are loaded asynchronously.  It represents the core
+        * of the Interlock runtime.
+        */
   /**
- * This object is exposed to the browser environment and is accessible
- * to chunks that are loaded asynchronously.  It represents the core
- * of the Interlock runtime.
- */
+   * This object is exposed to the browser environment and is accessible
+   * to chunks that are loaded asynchronously.  It represents the core
+   * of the Interlock runtime.
+   */
   var r = window['__interlock__'] = window['__interlock__'] || {
     modules: {},
     urls: {},
     providers: [/**
-     * Default module provider.  Builds a <script> element to download and
-     * execute the module-set that contains the requested module. Once a module
-     * has completed loading, the <script> tag will be removed from the DOM.
-     **/
+       * Default module provider.  Builds a <script> element to download and
+       * execute the module-set that contains the requested module. Once a module
+       * has completed loading, the <script> tag will be removed from the DOM.
+       **/
       function (moduleHash, next) {
         var head = document.getElementsByTagName('head')[0];
         var script = document.createElement('script');
@@ -54,24 +54,28 @@
         head.appendChild(script);
       }],
     /**
-   * Loads a module set into the Interlock runtime.
-   *
-   * If the loaded module requires other modules that are not yet loaded, requests
-   * for those modules will be made.  If all dependencies are satisfied, the module
-   * will be resolved and made available for requiring.
-   *
-   * @param  {Object}   moduleSet
-   * @param  {Array}    moduleSet.deps  Array of module hashes that represent the dependencies
-   *                                    for the module being defined.
-   * @param  {Function} moduleSet.fn    The module function itself, taking three args,
-   *                                    (require, module, exports).
-   */
+     * Loads a module set into the Interlock runtime.
+     *
+     * If the loaded module requires other modules that are not yet loaded, requests
+     * for those modules will be made.  If all dependencies are satisfied, the module
+     * will be resolved and made available for requiring.
+     *
+     * @param  {Object}   moduleSet
+     * @param  {Array}    moduleSet.deps  Array of module hashes that represent the dependencies
+     *                                    for the module being defined.
+     * @param  {Function} moduleSet.fn    The module function itself, taking three args,
+     *                                    (require, module, exports).
+     */
     load: function (moduleSet) {
       Object.keys(moduleSet).forEach(function (moduleHash) {
         var loadedModule = moduleSet[moduleHash];
         var unloadedDeps = loadedModule.deps.filter(function (dependencyHash) {
           var dependency = r.modules[dependencyHash];
           if (!dependency || dependency.blocking) {
+            if (dependencyHash in moduleSet) {
+              /* Avoid submitting request for module that will soon be provided.*/
+              r.modules[dependencyHash] = copyProps(r.modules[dependencyHash] || {}, { requested: true });
+            }
             r.request(dependencyHash, moduleHash);
             return true;
           }
@@ -86,20 +90,20 @@
       });
     },
     /**
-   * Initiates a request for the specified module.  Providers specified as
-   * part of `r.providers` will be run in sequence in reverse order.  When
-   * one provider fails, it should call the provided `next` method, ultimately
-   * resulting in a thrown error if the module cannot be loaded.
-   *
-   * If a blocked module is also specified, a record of that module will be kept
-   * in association with the requested module.  This way, the blocked module can
-   * be resolved when the dependency becomes available.  If a particular module
-   * has already been requested, the blocked module will be tracked, but an
-   * additional request for the module will not be initiated.
-   *
-   * @param  {String} moduleHash         Hash of the module that is needed.
-   * @param  {String} blockedModuleHash  Hash of the module that needs it.
-   */
+     * Initiates a request for the specified module.  Providers specified as
+     * part of `r.providers` will be run in sequence in reverse order.  When
+     * one provider fails, it should call the provided `next` method, ultimately
+     * resulting in a thrown error if the module cannot be loaded.
+     *
+     * If a blocked module is also specified, a record of that module will be kept
+     * in association with the requested module.  This way, the blocked module can
+     * be resolved when the dependency becomes available.  If a particular module
+     * has already been requested, the blocked module will be tracked, but an
+     * additional request for the module will not be initiated.
+     *
+     * @param  {String} moduleHash         Hash of the module that is needed.
+     * @param  {String} blockedModuleHash  Hash of the module that needs it.
+     */
     request: function (moduleHash, blockedModuleHash) {
       var module = r.modules[moduleHash] = r.modules[moduleHash] || {};
       if (blockedModuleHash) {
@@ -111,17 +115,17 @@
       }
     },
     /**
-   * Recursive function to invoke module providers.
-   *
-   * When a request comes in for a particular module that is as yet
-   * unloaded, providers are invoked in reverse order with two parameters:
-   * the `moduleHash` and the `next` provider.  It is the responsibility of
-   * each provider to invoke the next one in cases where the provider fails
-   * or is otherwise unable to fulfill the request.
-   *
-   * @param  {String} moduleHash  Hash of the requested module.
-   * @param  {Array}  providers   Remaining providers to try.
-   */
+     * Recursive function to invoke module providers.
+     *
+     * When a request comes in for a particular module that is as yet
+     * unloaded, providers are invoked in reverse order with two parameters:
+     * the `moduleHash` and the `next` provider.  It is the responsibility of
+     * each provider to invoke the next one in cases where the provider fails
+     * or is otherwise unable to fulfill the request.
+     *
+     * @param  {String} moduleHash  Hash of the requested module.
+     * @param  {Array}  providers   Remaining providers to try.
+     */
     requestSequence: function (moduleHash, providers) {
       var head = providers[0];
       if (!head) {
@@ -132,33 +136,35 @@
       });
     },
     /**
-   * Returns a URL for the module set that contains the requested module.
-   *
-   * @param  {String} moduleHash  Hash of the module that is needed.
-   *
-   * @return {String}             URL of the module set.
-   */
+     * Returns a URL for the module set that contains the requested module.
+     *
+     * @param  {String} moduleHash  Hash of the module that is needed.
+     *
+     * @return {String}             URL of the module set.
+     */
     getUrl: function (moduleHash) {
       var url = r.urls[moduleHash];
       return url;
     },
     /**
-   * Registers a mapping of module hashes to URLs.  Duplicate values may occur
-   * for modules that are contained by the same module set.  However, this
-   * duplication is not an issue if JavaScript is sent GZip'd.
-   *
-   * @param  {Object} urls  Keys are module hashes; values are URLs.
-   */
+     * Registers a mapping of module hashes to URLs.  Duplicate values may occur
+     * for modules that are contained by the same module set.  However, this
+     * duplication is not an issue if JavaScript is sent GZip'd.
+     *
+     * @param  {Object} urls  Keys are module hashes; values are URLs.
+     */
     registerUrls: function (urls) {
       copyProps(r.urls, urls);
     },
     /**
-   * Called when the fn for a module is available and ready to be executed.  Any
-   * modules which specified the given moduleHash as a dependency will be
-   * recursively resolved if all dependencies and their dependecies are now met.
-   *
-   * @param  {String} moduleHash  Hash of the module that is needed.
-   */
+     * Called when the fn for a module is available and ready to be executed.  Any
+     * modules which specified the given moduleHash as a dependency will be
+     * recursively resolved if all dependencies and their dependecies are now met.
+     * Similarly, any callbacks waiting for the module to be resolved will be
+     * invoked.
+     *
+     * @param  {String} moduleHash  Hash of the module that is needed.
+     */
     resolve: function (moduleHash) {
       var module = r.modules[moduleHash];
       (module.blocking || []).forEach(function (blockedModuleHash) {
@@ -170,47 +176,50 @@
           r.resolve(blockedModuleHash);
         }
       });
+      (module.cbs || []).forEach(function (cb) {
+        cb();
+      });  /* This indicates that the module and all of its dependencies have successfully loaded.*/
+      /* This indicates that the module and all of its dependencies have successfully loaded.*/
       module.blocking = null;
       if (module.entry) {
         r.require(moduleHash);
       }
     },
     /**
-   * Synchronous function that will return the exports of the specified module.
-   * Exports will be cached and returned for any subsequent requests for the
-   * same module.
-   *
-   * @param  {String}  moduleHash Hash of the module that is needed.
-   * @return {Exports}            Whatever the module set as exports, either the
-   *                              default exports object, a mutated object, or something
-   *                              else if `module.exports` is set directly.
-   */
+     * Synchronous function that will return the exports of the specified module.
+     * Exports will be cached and returned for any subsequent requests for the
+     * same module.
+     *
+     * @param  {String}  moduleHash Hash of the module that is needed.
+     * @return {Exports}            Whatever the module set as exports, either the
+     *                              default exports object, a mutated object, or something
+     *                              else if `module.exports` is set directly.
+     */
     require: function (moduleHash) {
       var module = r.modules[moduleHash];
       if (module.exports) {
         return module.exports;
       }
       var moduleObj = { exports: {} };
-      module.fn.call(null, r.require.bind(r), moduleObj, moduleObj.exports);
+      module.fn.call(window, r.require.bind(r), moduleObj, moduleObj.exports);
       return module.exports = moduleObj.exports;
     }
   };
   window['__interlock__'].registerUrls({
-    '68eda4e67c494cf47dfb4a0c00365e5add70fe6e': 'lib.js',
-    'a72d46f97ff2c6631660fe1b711dfc8a357c8f0c': 'app.js',
-    '6dcc6f54c68dd896e04134535fd9ee0c482fd1ac': '72366bfb691bca8bdc166e084ccde04627ccb29a.js'
+    'fa5f041f4511a8b3d8e33271a940b5fae9e09c4d': 'interlock/app.js',
+    'd9baa92227f3d76a0288db4fa78b31b0c61ae45f': 'interlock/lib.js'
   });
   window['__interlock__'].load({
-    'a72d46f97ff2c6631660fe1b711dfc8a357c8f0c': {
-      deps: ['6dcc6f54c68dd896e04134535fd9ee0c482fd1ac'],
+    'fa5f041f4511a8b3d8e33271a940b5fae9e09c4d': {
+      deps: ['d9baa92227f3d76a0288db4fa78b31b0c61ae45f'],
       fn: function (require, module, exports) {
         'use strict';
         module.exports = function () {
-          var foo = require('6dcc6f54c68dd896e04134535fd9ee0c482fd1ac');
+          var foo = require('d9baa92227f3d76a0288db4fa78b31b0c61ae45f');
           console.log('FOO: ', foo);
         }();
       }
     }
   });
-  window['__interlock__'].modules['a72d46f97ff2c6631660fe1b711dfc8a357c8f0c'].entry = true;
+  window['__interlock__'].modules['fa5f041f4511a8b3d8e33271a940b5fae9e09c4d'].entry = true;
 }());
