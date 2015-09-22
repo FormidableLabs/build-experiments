@@ -18,7 +18,11 @@
     "rjs-build-app": "r.js -o requirejs.build.js && cp client-requirejs-build/{lib,app}.min.js dist/requirejs",
     "rjs-build": "npm run rjs-clean && npm run rjs-build-almond && npm run rjs-build-app",
     "build": "npm run wp-build && npm run rjs-build && npm run ilk-build",
-    "sizes": "wc -c dist/webpack/*.min.js && wc -c dist/requirejs/*.min.js && wc -c dist/interlock/*.min.js"
+    "sizes": "wc -c dist/webpack/*.min.js && wc -c dist/requirejs/*.min.js && wc -c dist/interlock/*.min.js",
+    "ilk-gzip-size": "echo Interlock: $(gzip -c dist/interlock/*.min.js | wc -c)",
+    "wp-gzip-size": "echo Webpack: $(gzip -c dist/webpack/*.min.js | wc -c)",
+    "rjs-gzip-size": "echo RequireJS: $(gzip -c dist/requirejs/*.min.js | wc -c)",
+    "gzip-sizes": "npm run ilk-gzip-size && npm run wp-gzip-size && npm run rjs-gzip-size"
   },
   "author": "",
   "license": "MIT",

@@ -7,16 +7,13 @@ A quick skim of JS builders.
 
 These are _minified_, but **not** _gzipped_ byte **bundle sizes**:
 
-| File | webpack | requirejs | interlock |
-|------|---------|-----------|-----------|
-| Loader    | `0`   | `2878`  | `0` |
-| `lib.js`  | `467` | `132`   | `263` |
-| `app.js`  | `399` | `108`   | `2191` |
-| Extras    | `0`   | `0`     | `176` |
-| Total     | `866` | `3118`  | `2630` |
-
-Interlock has `HASH.js` files and `app.js` contains the overhead, so these
-numbers in _total_ might be accurate, but are likely not split up correctly.
+|      File      | webpack | requirejs | interlock |
+|----------------|---------|-----------|-----------|
+| Loader         | `0`     | `2878`    | `0`       |
+| `lib.js`       | `467`   | `132`     | `395`     |
+| `app.js`       | `399`   | `108`     | `2246`    |
+| Total          | `866`   | `3118`    | `2641`    |
+| Total (gzip'd) | `535`   | `1652`    | `1218`    |
 
 Here are the estimated **runtime overheads**:
 
