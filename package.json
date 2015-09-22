@@ -4,6 +4,10 @@
   "description": "Build experiments w/ different loaders",
   "main": "index.js",
   "scripts": {
+    "ilk-clean": "rm -rf dist/interlock/*.{js,json}",
+    "ilk-build-app": "node interlock.js",
+    "ilk-build-app-min": "OPTIMIZE=true node interlock.js",
+    "ilk-build": "npm run ilk-clean && npm run ilk-build-app && npm run ilk-build-app-min",
     "wp-clean": "rm -rf dist/webpack/*.{js,json}",
     "wp-build-lib": "webpack --config webpack.config.lib.js",
     "wp-build-lib-min": "OPTIMIZE=true webpack --config webpack.config.lib.js",
@@ -14,13 +18,21 @@
     "rjs-build-almond": "node_modules/webpack/node_modules/uglify-js/bin/uglifyjs node_modules/almond/almond.js -o dist/requirejs/almond.min.js --compress --mangle",
     "rjs-build-app": "r.js -o requirejs.build.js && cp client-requirejs-build/{lib,app}.min.js dist/requirejs",
     "rjs-build": "npm run rjs-clean && npm run rjs-build-almond && npm run rjs-build-app",
-    "build": "npm run wp-build && npm run rjs-build",
-    "sizes": "wc -c dist/webpack/*.min.js && wc -c dist/requirejs/*.min.js"
+    "build": "npm run wp-build && npm run rjs-build && npm run ilk-build",
+    "sizes": "wc -c dist/webpack/*.min.js && wc -c dist/requirejs/*.min.js && wc -c dist/interlock/*.min.js",
+    "ilk-gzip-size": "echo Interlock: $(gzip -c dist/interlock/*.min.js | wc -c)",
+    "wp-gzip-size": "echo Webpack: $(gzip -c dist/webpack/*.min.js | wc -c)",
+    "rjs-gzip-size": "echo RequireJS: $(gzip -c dist/requirejs/*.min.js | wc -c)",
+    "gzip-sizes": "npm run ilk-gzip-size && npm run wp-gzip-size && npm run rjs-gzip-size",
+    "all": "npm run build && npm run sizes && npm run gzip-sizes"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "almond": "^0.3.1",
+    "interlock": "^0.4.2",
+    "interlock-share": "^0.1.1",
+    "interlock-uglify": "^0.1.0",
     "lodash": "^3.10.1",
     "requirejs": "^2.1.20",
     "webpack": "^1.12.2"
