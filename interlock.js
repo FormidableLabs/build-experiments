@@ -12,14 +12,14 @@ var ilkLib = new Interlock({
   destRoot: DEST,
 
   split: {
-    "./client/lib.js": "interlock/lib.js"
+    "./client/lib.js": "interlock/lib" + (OPTIMIZE ? ".min" : "") + ".js"
   },
 
   includeComments: true,
   pretty: !OPTIMIZE,
 
   plugins: [
-    share.give("interlock/manifest.json")
+    share.give("interlock/manifest" + (OPTIMIZE ? ".min" : "") + ".json")
   ].concat(OPTIMIZE ? [
     uglify({}, true)
   ] : [])
@@ -30,14 +30,14 @@ var ilkApp = new Interlock({
   destRoot: DEST,
 
   entry: {
-    "./client/app.js": "interlock/app.js"
+    "./client/app.js": "interlock/app" + (OPTIMIZE ? ".min" : "") + ".js"
   },
 
   includeComments: true,
   pretty: !OPTIMIZE,
 
   plugins: [
-    share.take(path.join(DEST, "interlock/manifest.json"), DEST)
+    share.take(path.join(DEST, "interlock/manifest" + (OPTIMIZE ? ".min" : "") + ".json"), DEST)
   ].concat(OPTIMIZE ? [
     uglify({}, true)
   ] : [])

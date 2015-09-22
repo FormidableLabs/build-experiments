@@ -9,8 +9,8 @@
     "wp-build-lib-min": "OPTIMIZE=true webpack --config webpack.config.lib.js",
     "wp-build-app": "webpack --config webpack.config.app.js",
     "ilk-clean": "rm -rf dist/interlock/*.{js,json}",
-    "ilk-build-app": "node interlock.js",
-    "ilk-build": "npm run ilk-clean && npm run ilk-build-app",
+    "ilk-build": "npm run ilk-clean && node interlock.js",
+    "ilk-build-min": "OPTIMIZE=true node interlock.js",
     "wp-build-app-min": "OPTIMIZE=true webpack --config webpack.config.app.js",
     "wp-build": "npm run wp-clean && npm run wp-build-lib && npm run wp-build-lib-min && npm run wp-build-app && npm run wp-build-app-min",
     "rjs-clean": "rm -rf dist/requirejs/*.{js,json} client-requirejs-build",
@@ -18,8 +18,7 @@
     "rjs-build-app": "r.js -o requirejs.build.js && cp client-requirejs-build/{lib,app}.min.js dist/requirejs",
     "rjs-build": "npm run rjs-clean && npm run rjs-build-almond && npm run rjs-build-app",
     "build": "npm run wp-build && npm run rjs-build && npm run ilk-build",
-    "ilk-sizes": "ls dist/interlock/*.js | xargs -I % sh -c \"echo %; node_modules/webpack/node_modules/uglify-js/bin/uglifyjs % --compress --mangle | wc -c\"",
-    "sizes": "wc -c dist/webpack/*.min.js && wc -c dist/requirejs/*.min.js && npm run ilk-sizes"
+    "sizes": "wc -c dist/webpack/*.min.js && wc -c dist/requirejs/*.min.js && wc -c dist/interlock/*.min.js"
   },
   "author": "",
   "license": "MIT",
